@@ -30,7 +30,7 @@ loginFunctions = {
                             $('<i>').addClass('fas fa-times')
                         ),
                         $('<div>').addClass('ui username').append(
-                            $('<input>').attr({'id': 'create-username-input', 'placeholder': 'Username'})
+                            $('<input>').attr({ 'id': 'create-username-input', 'placeholder': 'Username' })
                         ),
                         $('<div>').addClass('ui password').append(
                             $('<input>').attr({ 'id': 'create-password-input', 'type': 'password', 'placeholder': 'Password' })
@@ -55,17 +55,7 @@ loginFunctions = {
             username: $('#username-input').val(),
             password: $('#password-input').val()
         }
-        $.ajax({ url: '/api/login', method: 'POST', data: user })
-            .then(function (data) {
-                if (data === null) {
-                    alert('user not found! :o');
-                    return;
-                } else {
-                    iflogged = data.username;
-                    $('.login-screen').remove();
-                    return iflogged
-                }
-            })
+        return user;
     },
 
     /**
@@ -77,13 +67,7 @@ loginFunctions = {
             username: $('#create-username-input').val(),
             password: $('#create-password-input').val()
         }
-        $.ajax({url: '/api/users', method: 'POST', data: newUser})
-            .catch(function () {
-                alert('That username has been taken')
-            })
-        $('.login-screen').remove()
-        iflogged = newUser.username;
-        return iflogged;
+        return newUser;
     },
 
 }
@@ -104,7 +88,17 @@ $(document).ready(function () {
         if ($('#password-input').val() === '') {
             alert('Please enter a password');
         } else {
-            loginFunctions.login();
+            $.ajax({ url: '/api/login', method: 'POST', data: loginFunctions.login() })
+                .then(function (data) {
+                    if (data === null) {
+                        alert('user not found! :o');
+                        return;
+                    } else {
+                        iflogged = data.username;
+                        $('.login-screen').remove();
+                        return iflogged
+                    }
+                })
         }
     });
 
@@ -119,7 +113,11 @@ $(document).ready(function () {
         if ($('#create-password-input').val() === '') {
             alert('Please enter a password');
         } else {
-            loginFunctions.createAccount();
+            $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
+            .catch(function () {
+                alert('That username has been taken')
+            })
+            $('.login-screen').remove()
         }
     });
 
@@ -136,7 +134,11 @@ $(document).ready(function () {
                 if ($('#create-password-input').val() === '') {
                     alert('Please enter a password');
                 } else {
-                    loginFunctions.createAccount();
+                    $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
+                    .catch(function () {
+                        alert('That username has been taken')
+                    })
+                $('.login-screen').remove()
                 }
             }
         }
@@ -158,7 +160,17 @@ $(document).ready(function () {
                 if ($('#password-input').val() === '') {
                     alert('Please enter a password');
                 } else {
-                    loginFunctions.login();
+                    $.ajax({ url: '/api/login', method: 'POST', data: loginFunctions.login() })
+                        .then(function (data) {
+                            if (data === null) {
+                                alert('user not found! :o');
+                                return;
+                            } else {
+                                iflogged = data.username;
+                                $('.login-screen').remove();
+                                return iflogged
+                            }
+                        })
                 }
             }
         }

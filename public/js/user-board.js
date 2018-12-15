@@ -7,8 +7,12 @@ userBoardFunctions = {
      * @event - on start
      * @function renderFriends - renders friends box to user board
      */
-    renderFriends: function () {
-        
+    renderFriendsList: function () {
+        $('.user-board').append(
+            $('<div>').addClass('ui friends-list').append(
+                $('<h1>').addClass('ui fl-title').text('Friends List')
+            )
+        )
     },
 
     /**
@@ -28,3 +32,19 @@ userBoardFunctions = {
     },
 
 }
+
+$(document).ready(function () {
+
+    userBoardFunctions.renderEffects();
+
+    console.log($('.friends-list'))
+
+    $(document).on('click', '#open-friends-list', function () {
+        userBoardFunctions.renderFriendsList()
+    })
+
+    $(document).on('click', '.friend', function () {
+        // open chat to that friend
+    })
+
+})
