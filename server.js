@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').createServer(app);
 
@@ -6,7 +7,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/tone', express.static(__dirname + '/node_modules/tone/build/'));
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.json());
 app.use(express.static("public"));
 

@@ -35,10 +35,24 @@ userBoardFunctions = {
 
 $(document).ready(function () {
 
+    $('.user-board').append(
+        $('<div>').addClass('ui button-return').css('animation', 'none').attr('id', 'open-friends-list-button').append(
+            $('<i>').addClass('fas fa-users')
+        )
+    )
+
     userBoardFunctions.renderEffects();
 
-    $(document).on('click', '#open-friends-list', function () {
-        userBoardFunctions.renderFriendsList()
+    $(document).on('click', '#open-friends-list-button', function () {
+        if ($('.friends-list').length != 1) {
+            userBoardFunctions.renderFriendsList()
+            $('#open-friends-list-button').removeClass('button-return').addClass('button-follow')
+            $('.friends-list').removeClass('close-friends-list').addClass('open-friends-list')
+        } else {
+            $('#open-friends-list-button').removeClass('button-follow').addClass('button-return');
+            $('.friends-list').removeClass('open-friends-list').addClass('close-friends-list');
+            setTimeout(function () {$('.friends-list').remove()}, 400)
+        }
     })
 
     $(document).on('click', '.friend', function () {

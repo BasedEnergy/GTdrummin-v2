@@ -1,0 +1,178 @@
+.login-screen {
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.3));
+}
+
+.login-form {
+    position: absolute;
+    top: 100px;
+    height: 300px;
+    width: 448px;
+    border-radius: 3px;
+    background-color: rgb(50, 50, 55);
+    display: flex;
+    flex-direction: column;
+    animation: login-in ease;
+    animation-duration: 0.7s;
+    overflow: hidden;
+}
+
+@keyframes login-in {
+    0% {
+        top: -300px
+    }
+
+    100% {
+        top: 100px
+    }
+}
+
+input {
+    padding-inline-start: 8px;
+    width: 100%;
+    height: 2em;
+    margin: 20px;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+    background: none;
+    transition: 0.4s;
+}
+
+input:focus {
+    background-color: silver;
+}
+
+.create-acc-box {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px;
+}
+
+#create-acc-link {
+    color: rgb(100, 100, 255);
+    transition: 0.4s;
+    margin-left: auto;
+    margin-right: 32px;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    -webkit-user-drag: none;
+}
+
+#login-link {
+    color: rgb(100, 100, 255);
+    transition: 0.4s;
+    margin-left: auto;
+    margin-right: 32px;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    -webkit-user-drag: none;
+}
+
+#create-acc-link:hover {
+    color: rgb(255, 255, 255);
+}
+
+#login-link:hover {
+    color: rgb(255, 255, 255);
+}
+
+.create-account-form {
+    position: absolute;
+    top: -300px;
+    height: 300px;
+    width: 448px;
+    border-radius: 3px;
+    border-bottom: 2px solid rgb(100, 100, 100);
+    background-color: rgb(50, 50, 55);
+    display: flex;
+    flex-direction: column;
+}
+
+.create-in {
+    top: 0px;
+    animation: createin ease;
+    animation-duration: 0.5s;
+}
+
+.create-out {
+    top: -300px;
+    animation: create-out ease;
+    animation-duration: 0.5s;
+}
+
+@keyframes create-out {
+    0% {
+        top: 0px
+    }
+
+    100% {
+        top: -298px
+    }
+}
+
+@keyframes createin {
+    0% {
+        top: -300px
+    }
+
+    100% {
+        top: 0px
+    }
+}
+
+#login-button {
+    position: absolute;
+    bottom: 42px;
+    margin: auto;
+    width: calc(100% - 24px);
+}
+
+#create-account-button {
+    position: absolute;
+    bottom: 42px;
+    margin: auto;
+    width: calc(100% - 24px);
+}
+
+#close-login {
+    position: relative;
+    top: 8px;
+    left: 414px;
+    height: 22px;
+    width: 22px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.4s;
+}
+
+#close-login:hover {
+    background-color: silver;
+}
+
+.remove-login {
+    animation: ease remove-login;
+    animation-duration: 0.5s;
+}
+
+@keyframes remove-login {
+    0% {opacity: 1}
+    100% {opacity: 0}
+}
