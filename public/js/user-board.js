@@ -37,8 +37,6 @@ $(document).ready(function () {
 
     userBoardFunctions.renderEffects();
 
-    console.log($('.friends-list'))
-
     $(document).on('click', '#open-friends-list', function () {
         userBoardFunctions.renderFriendsList()
     })
