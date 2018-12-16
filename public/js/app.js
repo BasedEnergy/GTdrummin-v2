@@ -35,7 +35,7 @@ $(document).ready( function() {
         matrix1.col = 16;
         matrix1.row = 8;
         matrix1.init();
-        // matrix1.resize($("#Content").width(), 400);
+        matrix1.resize($("#Content").width(), 400);
         matrix1.draw();
     }
     /**
@@ -44,7 +44,7 @@ $(document).ready( function() {
     Interface.Slider({
         name : "TEMPO",
         min : 60,
-        max : 180,
+        max : 160,
         value : Tone.Transport.bpm.value,
         drag : function(val){
             Tone.Transport.bpm.value = val;

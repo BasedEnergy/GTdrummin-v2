@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="/tone/Tone.min.js"></script>
-	<script src="/jquery/jquery.js"></script>
-	<script src="./scripts/nexusUI.js"></script>
-	<script src="./scripts/draggabilly.js"></script>
-	<script src="./scripts/StartAudioContext.js"></script>
-	<script src="./scripts/Interface.js"></script>
-	<script src="./scripts/nexusUI.js"></script>
+    <script src="/jquery/jquery.js"></script>
+    <script src="./scripts/nexusUI.js"></script>
+    <script src="./scripts/draggabilly.js"></script>
+    <script src="./scripts/StartAudioContext.js"></script>
+    <script src="./scripts/Interface.js"></script>
+    <script src="./scripts/nexusUI.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Charmonman|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-	crossorigin="anonymous">
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/appstyle.css">
     <link rel="stylesheet" href="./css/login.css">
@@ -21,6 +22,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>GT Drummin'</title>
 </head>
+
 <body>
     <nav class="ui">
         <div class="ui title">
@@ -30,13 +32,20 @@
             <h1>Login</h1>
         </div>
     </nav>
-    <section class="ui beat-board"></section>
+        <section class="beat-board">
+                <div id="Content">
+            <canvas nx="matrix">
+                <div id="bar"></div>
+            </canvas>
+        </div>
+        </section>
     <section class="ui user-board"></section>
 </body>
-    <script>
-        let iflogged;
-    </script>
-    <script src="./js/app.js"></script>
-    <script src="./js/login.js"></script>
-    <script src="./js/user-board.js"></script>
+<script>
+    let iflogged;
+</script>
+<script src="./js/app.js"></script>
+<script src="./js/login.js"></script>
+<script src="./js/user-board.js"></script>
+
 </html>
