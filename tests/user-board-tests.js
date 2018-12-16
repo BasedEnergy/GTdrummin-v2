@@ -36,4 +36,12 @@ describe('Friends List', function () {
         }, 400)
     });
 
+});
+
+describe('chat', function () {
+
+    it('should render the correct chat when a friend is clicked', function () {
+        
+    })
+
 })
