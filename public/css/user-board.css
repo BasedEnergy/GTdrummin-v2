@@ -51,10 +51,12 @@
     cursor: pointer;
     transition: 0.4s;
     border-radius: 0 3px 3px 0;
+    color: silver;
 }
 
 #open-friends-list-button:hover {
     background-color: silver;
+    color: black;
 }
 
 .button-follow {
