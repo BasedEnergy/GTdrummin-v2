@@ -46,6 +46,7 @@ setBeat = function (array) {
         matrix1.col = 16;
         matrix1.row = 8;
         matrix1.init();
+        console.log(matrix1.matrix)
         matrix1.draw();
     }
     /**
@@ -100,6 +101,7 @@ $(document).ready(function () {
         }
         $.ajax({ url: '/api/beats/one', method: 'POST', data: beatId })
             .then(function (data) {
+                console.log(data)
                 console.log(JSON.parse(data.array))
                 prepBeat(data.array)
             })
