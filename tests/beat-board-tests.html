@@ -16,36 +16,38 @@
 
 <body>
 
+  
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
   <script src="../public/js/app.js"></script>
-  <script src="./scripts/nexusUI.js"></script>
-  <script src="./scripts/draggabilly.js"></script>
-  <script src="./scripts/StartAudioContext.js"></script>
-  <script src="./scripts/Interface.js"></script>
-  <script src="./scripts/nexusUI.js"></script>
+  <script src="../node_modules/tone/build/Tone.min.js"></script>
+  <script src="../public/scripts/nexusUI.js"></script>
+  <script src="../public/scripts/draggabilly.js"></script>
+  <script src="../public/scripts/StartAudioContext.js"></script>
+  <script src="../public/scripts/Interface.js"></script>
+  <script src="../public/scripts/nexusUI.js"></script>
 
   <div id="app">
-    <nav class="ui">
-      <div class="ui title">
-        <h1>GT Drummin'</h1>
-      </div>
-      <div id="open-login-button" class="ui button">
-        <h1>Login</h1>
-      </div>
-    </nav>
-    <section class="beat-board">
-        <div id="Content">
-            <canvas nx="matrix">
-                <div id="bar"></div>
-            </canvas>
-        </div>
-    </section>
-    <section class="ui user-board"></section>
+      <nav class="ui">
+          <div class="ui title">
+              <h1>GT Drummin'</h1>
+          </div>
+          <div id="open-login-button" class="ui button">
+              <h1>Login</h1>
+          </div>
+      </nav>
+      <section id="test" class="beat-board">
+          <div id="Content">
+              <canvas class="matrix" nx="matrix">
+                  <div id="bar"></div>
+              </canvas>
+          </div>
+      </section>
+      <section class="ui user-board"></section>
   </div>
 
   <div id="mocha"></div>
-
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/5.2.0/mocha.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.1.2/chai.min.js"></script>

@@ -10,8 +10,20 @@ userBoardFunctions = {
     renderFriendsList: function () {
         $('.user-board').append(
             $('<div>').addClass('ui friends-list').append(
-                $('<h1>').addClass('ui fl-title').text('Friends List')
-            )
+                $('<h1>').addClass('ui fl-title').text('Friends List'),
+                $('<h1>').text('still not functional :(').css('color','white'),
+                $('<div>').addClass('ui list').attr('id', 'friends-list')
+            ),
+        )
+    },
+
+    renderBeatsList: function () {
+        $('.user-board').append(
+            $('<div>').addClass('ui beats-list').append(
+                $('<h1>').addClass('ui bl-title').text('Beats'),
+                $('<div>').addClass('list').attr('id', 'beats-list'),
+                $('<div>').attr('id', 'save-beat').addClass('ui list-button').text('Save Beat')
+            ),
         )
     },
 
@@ -36,22 +48,58 @@ userBoardFunctions = {
 $(document).ready(function () {
 
     $('.user-board').append(
-        $('<div>').addClass('ui button-return').css('animation', 'none').attr('id', 'open-friends-list-button').append(
+        $('<div>').addClass('ui fl-button-return').css('animation', 'none').attr('id', 'open-friends-list-button').append(
             $('<i>').addClass('fas fa-users')
-        )
-    )
+        ),
+        $('<div>').addClass('ui bl-button-return').css('animation', 'none').attr('id', 'open-beats-list-button').append(
+            $('<i>').addClass('fab fa-itunes-note')
+        ),
+    );
 
     userBoardFunctions.renderEffects();
 
     $(document).on('click', '#open-friends-list-button', function () {
         if ($('.friends-list').length != 1) {
-            userBoardFunctions.renderFriendsList()
-            $('#open-friends-list-button').removeClass('button-return').addClass('button-follow')
-            $('.friends-list').removeClass('close-friends-list').addClass('open-friends-list')
+            userBoardFunctions.renderFriendsList();
+            $('#open-friends-list-button').removeClass('fl-button-return').addClass('fl-button-follow');
+            $('.friends-list').removeClass('close-friends-list').addClass('open-friends-list');
         } else {
-            $('#open-friends-list-button').removeClass('button-follow').addClass('button-return');
+            $('#open-friends-list-button').removeClass('fl-button-follow').addClass('fl-button-return');
             $('.friends-list').removeClass('open-friends-list').addClass('close-friends-list');
-            setTimeout(function () {$('.friends-list').remove()}, 400)
+            setTimeout(function () { $('.friends-list').remove() }, 400)
+        }
+    })
+
+    $(document).on('click', '#open-beats-list-button', function () {
+        if ($('.beats-list').length != 1) {
+            userBoardFunctions.renderBeatsList();
+            let user = {
+                user: iflogged
+            }
+            $.ajax({ url: '/api/beats/user', method: 'POST', data: user })
+                .then(function (data) {
+                    if (data.length != 0) {
+                        data.forEach(e => {
+                            $('#beats-list').append(
+                                $('<div>').addClass('ui beat').attr('id', `${e.beatId}`).append(
+                                    $('<div>').addClass('share-beat').append(
+                                        $('<i>').addClass('fas fa-share')
+                                    ),
+                                    $('<h1>').text(),
+                                    $('<div>').addClass('delete-beat').append(
+                                        $('<i>').addClass('fas fa-times')
+                                    ),
+                                )
+                            )
+                        })
+                    }
+                })
+            $('#open-beats-list-button').removeClass('bl-button-return').addClass('bl-button-follow');
+            $('.beats-list').removeClass('close-beats-list').addClass('open-beats-list');
+        } else {
+            $('#open-beats-list-button').removeClass('bl-button-follow').addClass('bl-button-return');
+            $('.beats-list').removeClass('open-beats-list').addClass('close-beats-list');
+            setTimeout(function () { $('.beats-list').remove() }, 400);
         }
     })
 

@@ -59,24 +59,131 @@
     color: black;
 }
 
-.button-follow {
+#open-beats-list-button {
+    position: absolute;
+    top: 0;
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+    transition: 0.4s;
+    border-radius: 3px 0 0 3px;
+    color: silver;
+}
+
+#open-beats-list-button:hover {
+    background-color: silver;
+    color: black;
+}
+
+.fl-button-follow {
     left: 300px;
-    animation: button-follow;
+    animation: fl-button-follow;
     animation-duration: 0.4s;
 }
 
-.button-return {
+.fl-button-return {
     left: 0px;
-    animation: button-return;
+    animation: fl-button-return;
     animation-duration: 0.4s;
 }
 
-@keyframes button-follow {
+@keyframes fl-button-follow {
     0% {left: 0px}
     100% {left: 300px}
 }
 
-@keyframes button-return {
+@keyframes fl-button-return {
     0% {left: 300px}
     100% {left: 0px}
+}
+
+.ui.beats-list {
+    position: absolute;
+    height: 100%;
+    width: 300px;
+    background-color: rgb(0,0,0,0.3);
+    font-weight: bold;
+}
+
+.list {
+    height: calc(100% - 56px);
+    width: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.list-button {
+    position: absolute;
+    width: 300px;
+    height: 28px;
+    bottom: 0;
+    border-radius: 3px 3px 0 0;
+    background-color: green;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.list-button:hover {
+    background-color: lime;
+}
+
+.open-beats-list {
+    right: 0px;
+    animation: open-beats-list;
+    animation-duration: 0.4s;
+}
+
+.close-beats-list {
+    right: -300px;
+    animation: close-beats-list;
+    animation-duration: 0.4s;
+}
+
+.ui.beat {
+    height: 28px;
+    width: 98%;
+    background-color: white;
+    margin: 4px;
+    border-radius: 3px;
+}
+
+.ui.bl-title {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 28px;
+    background-color: silver;
+    border-bottom: 1px solid rgb(0,0,0,0.7);
+}
+
+@keyframes open-beats-list {
+    0% {right: -300px}
+    100% {right: 0px}
+}
+
+@keyframes close-beats-list {
+    0% {right: 0px}
+    100% {right: -300px}
+}
+
+.bl-button-follow {
+    right: 300px;
+    animation: bl-button-follow;
+    animation-duration: 0.4s;
+}
+
+.bl-button-return {
+    right: 0px;
+    animation: bl-button-return;
+    animation-duration: 0.4s;
+}
+
+@keyframes bl-button-follow {
+    0% {right: 0px}
+    100% {right: 300px}
+}
+
+@keyframes bl-button-return {
+    0% {right: 300px}
+    100% {right: 0px}
 }

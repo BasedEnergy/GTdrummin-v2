@@ -94,7 +94,7 @@ $(document).ready(function () {
                         alert('user not found! :o');
                         return;
                     } else {
-                        iflogged = data.userId;
+                        iflogged = data.username;
                         $('.login-screen').remove();
                         return iflogged
                     }
@@ -114,14 +114,15 @@ $(document).ready(function () {
             alert('Please enter a password');
         } else {
             $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
-            .then(function (data) {
-                iflogged = data.userId;
-                $('.login-screen').remove();
-                return iflogged
-            })
-            .catch(function () {
-                alert('That username has been taken')
-            })
+                .then(function (data) {
+                    if (data.errors[0].message === 'username must be unique') {
+                        alert('that username is already taken')
+                    } else {
+                        iflogged = data.user.username;
+                        $('.login-screen').remove();
+                        return iflogged
+                    }
+                })
         }
     });
 
@@ -139,14 +140,15 @@ $(document).ready(function () {
                     alert('Please enter a password');
                 } else {
                     $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
-                    .then(function () {
-                        iflogged = data.userId;
-                        $('.login-screen').remove();
-                        return iflogged
-                    })
-                    .catch(function () {
-                        alert('That username has been taken')
-                    })
+                        .then(function (data) {
+                            if (data.errors[0].message === 'username must be unique') {
+                                alert('that username is already taken')
+                            } else {
+                                iflogged = data.user.username;
+                                $('.login-screen').remove();
+                                return iflogged
+                            }
+                        })
                 }
             }
         }
@@ -174,7 +176,7 @@ $(document).ready(function () {
                                 alert('user not found! :o');
                                 return;
                             } else {
-                                iflogged = data.userId;
+                                iflogged = data.username;
                                 $('.login-screen').remove();
                                 return iflogged
                             }

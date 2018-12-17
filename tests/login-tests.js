@@ -42,6 +42,13 @@ describe('create account', function () {
         })
     });
 
+    it('should set iflogged to that users name', function () {
+        $('#create-account-button').trigger('click');
+        expect(function () {
+            iflogged.to.equal('Kevin')
+        })
+    })
+
 });
 
 describe('login', function () {
