@@ -7,7 +7,7 @@ setBeat = function (array) {
                     $('<div>').attr('id', 'bar')
                 )
             )
-        ) 
+        )
     )
 
     /**
@@ -40,14 +40,22 @@ setBeat = function (array) {
     /**
      * @function onload - creates a matrix of squares when the page loads  
      */
+    console.log(array)
+
     nx.onload = function () {
         nx.colorize("#70D1EE");
 
         matrix1.col = 16;
         matrix1.row = 8;
         matrix1.init();
+        console.log(matrix1.matrix)
         matrix1.draw();
+        if (array != undefined) {
+            matrix1.matrix = array
+        }
+        console.log(matrix1.matrix)
     }
+
     /**
      * @function Slider - creates a tempo slider that sets the value of the bpm
      */
@@ -81,11 +89,6 @@ setBeat = function (array) {
 
 }
 
-    prepBeat = function (array) {
-        let rightarray = JSON.parse(array)
-        console.log(rightarray)
-    }
-
 $(document).ready(function () {
 
     setBeat()
@@ -100,8 +103,8 @@ $(document).ready(function () {
         }
         $.ajax({ url: '/api/beats/one', method: 'POST', data: beatId })
             .then(function (data) {
-                console.log(JSON.parse(data.array))
-                prepBeat(data.array)
+                let beat = JSON.parse(data.array, function(k, v) { return v === null ? undefined : v; })
+                setBeat(beat)
             })
     })
 
