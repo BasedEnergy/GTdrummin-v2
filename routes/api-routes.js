@@ -37,7 +37,7 @@ module.exports = function (app) {
 
     app.post('/api/beats/one', function (req, res) {
         db.Beats.findOne({
-            where: { userId: req.body.userId }
+            where: { beatId: req.body.id }
         })
             .then(function (beat) {
                 res.json(beat);

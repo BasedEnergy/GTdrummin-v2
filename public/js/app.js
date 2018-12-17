@@ -1,4 +1,15 @@
-$(document).ready(function () {
+setBeat = function (array) {
+    $('#test').remove();
+    $('body').append(
+        $('<div>').attr('id', 'test').append(
+            $('<div>').attr('id', 'Content').append(
+                $('<canvas>').addClass('matrix').attr('nx', 'matrix').append(
+                    $('<div>').attr('id', 'bar')
+                )
+            )
+        ) 
+    )
+
     /**
      * @function toMaster - sends the new player with drum samples to the Master channel to be used in the drum sequencer 
      */
@@ -65,10 +76,33 @@ $(document).ready(function () {
         },
     });
 
+    document.getElementById('test').style.background = 'linear-gradient(to bottom, rgb(55,55,55), rgb(50,50,130))';
+    $('.beat-board').height('calc(60% - 16px)');
+
+}
+
+    prepBeat = function (array) {
+        let rightarray = JSON.parse(array)
+        console.log(rightarray)
+    }
+
+$(document).ready(function () {
+
+    setBeat()
+
     /**
      * @event - sets the height  and background of .beat-board
      */
-    document.getElementById('test').style.background = 'linear-gradient(to bottom, rgb(55,55,55), rgb(50,50,130))';
-    $('.beat-board').height('calc(60% - 16px)');
-    
+
+    $(document).on('click', '.ui.beat', function () {
+        let beatId = {
+            id: $(this).attr('id')
+        }
+        $.ajax({ url: '/api/beats/one', method: 'POST', data: beatId })
+            .then(function (data) {
+                console.log(JSON.parse(data.array))
+                prepBeat(data.array)
+            })
+    })
+
 });

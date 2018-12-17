@@ -67,6 +67,10 @@ userBoardFunctions = {
 
     },
 
+    openSaveBeat: function () {
+
+    },
+
     saveBeat: function () {
         let newBeat = {
             beat: JSON.stringify(matrix1.matrix),
@@ -74,11 +78,22 @@ userBoardFunctions = {
         };
         $.ajax({ url: '/api/beats', method: 'POST', data: newBeat })
             .then(function (data) {
+                if (data.status === 301) {
+                    $('#beats-list').append(
+                        $('<div>').addClass('ui beat').attr('id', `${data.beat.beatId}`).append(
+                            $('<div>').addClass('share-beat').append(
+                                $('<i>').addClass('fas fa-share')
+                            ),
+                            $('<h1>').text(),
+                            $('<div>').addClass('delete-beat').append(
+                                $('<i>').addClass('fas fa-times')
+                            )
+                        )
+                    )
+                }
                 if (data.errors[0].message === 'Beats.user cannot be null') {
                     alert('You need to be signed in to save beats!');
-                } else {
-                    return true;
-                }
+                } 
             })
     },
 
@@ -133,21 +148,12 @@ $(document).ready(function () {
         }
     });
 
+    $(document).on('click', '#open-save-beat', function () {
+        userBoardFunctions.openSaveBeat();
+    });
+
     $(document).on('click', '#save-beat', function () {
         userBoardFunctions.saveBeat();
-        if (userBoardFunctions.saveBeat() === true) {
-            $('#beats-list').append(
-                $('<div>').addClass('ui beat').attr('id', `${data.beat.user}`).append(
-                    $('<div>').addClass('share-beat').append(
-                        $('<i>').addClass('fas fa-share')
-                    ),
-                    $('<h1>').text(),
-                    $('<div>').addClass('delete-beat').append(
-                        $('<i>').addClass('fas fa-times')
-                    )
-                )
-            )
-        }
     });
 
     $(document).on('click', '.delete-beat', function () {
