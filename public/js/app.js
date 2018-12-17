@@ -1,4 +1,4 @@
-setBeat = function (array) {
+setBeat = function () {
     $('#test').remove();
     $('body').append(
         $('<div>').attr('id', 'test').append(
@@ -40,7 +40,6 @@ setBeat = function (array) {
     /**
      * @function onload - creates a matrix of squares when the page loads  
      */
-    console.log(array)
 
     nx.onload = function () {
         nx.colorize("#70D1EE");
@@ -48,11 +47,7 @@ setBeat = function (array) {
         matrix1.col = 16;
         matrix1.row = 8;
         matrix1.init();
-        console.log(matrix1.matrix)
         matrix1.draw();
-        if (array != undefined) {
-            matrix1.matrix = array
-        }
         console.log(matrix1.matrix)
     }
 
@@ -103,9 +98,20 @@ $(document).ready(function () {
         }
         $.ajax({ url: '/api/beats/one', method: 'POST', data: beatId })
             .then(function (data) {
-                let beat = JSON.parse(data.array, function(k, v) { return v === null ? undefined : v; })
-                setBeat(beat)
+                let beat = JSON.parse(data.array, function (k, v) { return v === null ? 'undefined' : v; })
+                beat.forEach(e => {
+                    for (let i = 0; i < e.length; i++) {
+                        if (e[i] === 'undefined') {
+                            e[i] = undefined
+                        }
+                    }
+                })
+                console.log(beat)
+                matrix1.matrix = beat
+                matrix1.draw()
             })
     })
-
+    // if (array != undefined) {
+    //     matrix1.matrix = array
+    // }
 });
