@@ -11,7 +11,7 @@ userBoardFunctions = {
         $('.user-board').append(
             $('<div>').addClass('ui friends-list').append(
                 $('<h1>').addClass('ui fl-title').text('Friends List'),
-                $('<h1>').text('still not functional :(').css('color','white'),
+                $('<h1>').text('still not functional :(').css('color', 'white'),
                 $('<div>').addClass('ui list').attr('id', 'friends-list')
             ),
         )
@@ -25,6 +25,30 @@ userBoardFunctions = {
                 $('<div>').attr('id', 'save-beat').addClass('ui list-button').text('Save Beat')
             ),
         )
+    },
+
+    renderBeats: function () {
+        let user = {
+            user: iflogged
+        }
+        $.ajax({ url: '/api/beats/user', method: 'POST', data: user })
+            .then(function (data) {
+                if (data.length != 0) {
+                    data.forEach(e => {
+                        $('#beats-list').append(
+                            $('<div>').addClass('ui beat').attr('id', `${e.beatId}`).append(
+                                $('<div>').addClass('share-beat').append(
+                                    $('<i>').addClass('fas fa-share')
+                                ),
+                                $('<h1>').text(),
+                                $('<div>').addClass('delete-beat').append(
+                                    $('<i>').addClass('fas fa-times')
+                                ),
+                            )
+                        )
+                    })
+                }
+            })
     },
 
     /**
@@ -42,6 +66,32 @@ userBoardFunctions = {
     renderChat: function () {
 
     },
+
+    saveBeat: function () {
+        let newBeat = {
+            beat: JSON.stringify(matrix1.matrix),
+            user: iflogged
+        };
+        $.ajax({ url: '/api/beats', method: 'POST', data: newBeat })
+            .then(function (data) {
+                if (data.errors[0].message === 'Beats.user cannot be null') {
+                    alert('You need to be signed in to save beats!');
+                } else {
+                    return true;
+                }
+            })
+    },
+
+    shareBeat: function () {
+
+    },
+
+    deleteBeat: function (beatId) {
+        $.ajax({ url: '/api/beats/delete', method: 'POST', data: beatId })
+            .then(function (data) {
+                alert(`Deleted beat: ${data.beatId}`)
+            })
+    }
 
 }
 
@@ -68,32 +118,12 @@ $(document).ready(function () {
             $('.friends-list').removeClass('open-friends-list').addClass('close-friends-list');
             setTimeout(function () { $('.friends-list').remove() }, 400)
         }
-    })
+    });
 
     $(document).on('click', '#open-beats-list-button', function () {
         if ($('.beats-list').length != 1) {
             userBoardFunctions.renderBeatsList();
-            let user = {
-                user: iflogged
-            }
-            $.ajax({ url: '/api/beats/user', method: 'POST', data: user })
-                .then(function (data) {
-                    if (data.length != 0) {
-                        data.forEach(e => {
-                            $('#beats-list').append(
-                                $('<div>').addClass('ui beat').attr('id', `${e.beatId}`).append(
-                                    $('<div>').addClass('share-beat').append(
-                                        $('<i>').addClass('fas fa-share')
-                                    ),
-                                    $('<h1>').text(),
-                                    $('<div>').addClass('delete-beat').append(
-                                        $('<i>').addClass('fas fa-times')
-                                    ),
-                                )
-                            )
-                        })
-                    }
-                })
+            userBoardFunctions.renderBeats();
             $('#open-beats-list-button').removeClass('bl-button-return').addClass('bl-button-follow');
             $('.beats-list').removeClass('close-beats-list').addClass('open-beats-list');
         } else {
@@ -101,7 +131,32 @@ $(document).ready(function () {
             $('.beats-list').removeClass('open-beats-list').addClass('close-beats-list');
             setTimeout(function () { $('.beats-list').remove() }, 400);
         }
-    })
+    });
+
+    $(document).on('click', '#save-beat', function () {
+        userBoardFunctions.saveBeat();
+        if (userBoardFunctions.saveBeat() === true) {
+            $('#beats-list').append(
+                $('<div>').addClass('ui beat').attr('id', `${data.beat.user}`).append(
+                    $('<div>').addClass('share-beat').append(
+                        $('<i>').addClass('fas fa-share')
+                    ),
+                    $('<h1>').text(),
+                    $('<div>').addClass('delete-beat').append(
+                        $('<i>').addClass('fas fa-times')
+                    )
+                )
+            )
+        }
+    });
+
+    $(document).on('click', '.delete-beat', function () {
+        let beatId = {
+            id: $(this).parent().attr('id')
+        }
+        userBoardFunctions.deleteBeat(beatId);
+        $(this).parent().remove();
+    });
 
     $(document).on('click', '.friend', function () {
         // open chat to that friend

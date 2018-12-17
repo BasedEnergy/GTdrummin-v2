@@ -9,7 +9,7 @@ loginFunctions = {
      */
     renderLogin: function () {
         $('body').append(
-            $('<div>').addClass('ui login-screen').append(
+            $('<div>').attr('id', 'login-screen').addClass('ui login-screen').append(
                 $('<form>').addClass('login-form').append(
                     $('<div>').attr('id', 'close-login').addClass('ui').append(
                         $('<i>').addClass('fas fa-times')
@@ -55,7 +55,22 @@ loginFunctions = {
             username: $('#username-input').val(),
             password: $('#password-input').val()
         }
-        return user;
+        $.ajax({ url: '/api/login', method: 'POST', data: user })
+            .then(function (data) {
+                if (data === null) {
+                    alert('user not found! :o');
+                    return;
+                } else {
+                    iflogged = data.username;
+                    if (iflogged != undefined) {
+                        $('.login-screen').remove();
+                        if ($('#beats-list').length != 0) {
+                            userBoardFunctions.renderBeats();
+                        }
+                    }
+                    return iflogged
+                }
+            })
     },
 
     /**
@@ -67,7 +82,19 @@ loginFunctions = {
             username: $('#create-username-input').val(),
             password: $('#create-password-input').val()
         }
-        return newUser;
+        $.ajax({ url: '/api/users', method: 'POST', data: newUser })
+            .then(function (data) {
+                if (data.status === 301) {
+                    iflogged = data.user.username;
+                    if (iflogged != undefined) {
+                        $('.login-screen').remove();
+                    }
+                    return iflogged
+                }
+                if (data.errors[0].message === 'username must be unique') {
+                    alert('that username is already taken')
+                } 
+            })
     },
 
 }
@@ -88,17 +115,7 @@ $(document).ready(function () {
         if ($('#password-input').val() === '') {
             alert('Please enter a password');
         } else {
-            $.ajax({ url: '/api/login', method: 'POST', data: loginFunctions.login() })
-                .then(function (data) {
-                    if (data === null) {
-                        alert('user not found! :o');
-                        return;
-                    } else {
-                        iflogged = data.username;
-                        $('.login-screen').remove();
-                        return iflogged
-                    }
-                })
+            loginFunctions.login()
         }
     });
 
@@ -113,16 +130,7 @@ $(document).ready(function () {
         if ($('#create-password-input').val() === '') {
             alert('Please enter a password');
         } else {
-            $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
-                .then(function (data) {
-                    if (data.errors[0].message === 'username must be unique') {
-                        alert('that username is already taken')
-                    } else {
-                        iflogged = data.user.username;
-                        $('.login-screen').remove();
-                        return iflogged
-                    }
-                })
+            loginFunctions.createAccount();
         }
     });
 
@@ -139,16 +147,7 @@ $(document).ready(function () {
                 if ($('#create-password-input').val() === '') {
                     alert('Please enter a password');
                 } else {
-                    $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
-                        .then(function (data) {
-                            if (data.errors[0].message === 'username must be unique') {
-                                alert('that username is already taken')
-                            } else {
-                                iflogged = data.user.username;
-                                $('.login-screen').remove();
-                                return iflogged
-                            }
-                        })
+                    loginFunctions.createAccount();
                 }
             }
         }
@@ -170,17 +169,7 @@ $(document).ready(function () {
                 if ($('#password-input').val() === '') {
                     alert('Please enter a password');
                 } else {
-                    $.ajax({ url: '/api/login', method: 'POST', data: loginFunctions.login() })
-                        .then(function (data) {
-                            if (data === null) {
-                                alert('user not found! :o');
-                                return;
-                            } else {
-                                iflogged = data.username;
-                                $('.login-screen').remove();
-                                return iflogged
-                            }
-                        })
+                    loginFunctions.login();
                 }
             }
         }

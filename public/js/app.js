@@ -1,44 +1,3 @@
-beatFunctions = {
-
-    saveBeat: function () {
-        let newBeat = {
-            beat: JSON.stringify(matrix1.matrix),
-            user: iflogged
-        }
-        $.ajax({ url: '/api/beats', method: 'POST', data: newBeat })
-            .then(function (data) {
-                if (data.errors[0].message === 'Beats.user cannot be null') {
-                    alert('You need to be signed in to save beats!');
-                    return
-                } else {
-                    $('#beats-list').append(
-                        $('<div>').addClass('ui beat').attr('id', `${data.beat.user}`).append(
-                            $('<div>').addClass('share-beat').append(
-                                $('<i>').addClass('fas fa-share')
-                            ),
-                            $('<h1>').text(),
-                            $('<div>').addClass('delete-beat').append(
-                                $('<i>').addClass('fas fa-times')
-                            )
-                        )
-                    )
-                }
-            })
-    },
-
-    shareBeat: function () {
-
-    },
-
-    deleteBeat: function (beatId) {
-        $.ajax({ url: '/api/beats/delete', method: 'POST', data: beatId })
-            .then(function (data) {
-                alert(`Deleted beat: ${data.beatId}`)
-            })
-    }
-
-}
-
 $(document).ready(function () {
     /**
      * @function toMaster - sends the new player with drum samples to the Master channel to be used in the drum sequencer 
@@ -111,17 +70,5 @@ $(document).ready(function () {
      */
     document.getElementById('test').style.background = 'linear-gradient(to bottom, rgb(55,55,55), rgb(50,50,130))';
     $('.beat-board').height('calc(60% - 16px)');
-
-    $(document).on('click', '#save-beat', function() {
-        beatFunctions.saveBeat();
-    });
-
-    $(document).on('click', '.delete-beat', function () {
-        let beatId = {
-            id: $(this).parent().attr('id')
-        }
-        beatFunctions.deleteBeat(beatId);
-        $(this).parent().remove();
-    });
-
+    
 });

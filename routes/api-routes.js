@@ -27,7 +27,6 @@ module.exports = function (app) {
 
     /*2*/
     app.post('/api/beats/user', function (req, res) {
-        console.log(req.body)
         db.Beats.findAll({
             where: { user: req.body.user }
         })
@@ -46,7 +45,9 @@ module.exports = function (app) {
     });
 
     app.post('/api/beats/delete', function (req, res) {
-        db.Beats.query('DELETE FROM Beats WHERE beatId = ?', [req.body.id])
+        db.Beats.destroy({
+            where: {beatId: req.body.id }
+        })
     });
 
     app.post('/api/beats', function (req, res) {
