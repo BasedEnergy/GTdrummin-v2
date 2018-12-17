@@ -23,8 +23,6 @@ module.exports = function (app) {
             password: req.body.password
         }).then(function (dbUser) {
             res.json({ user: dbUser, status: 301 });
-
-
         })
             .catch(function (err) {
                 res.json(err);
@@ -32,23 +30,25 @@ module.exports = function (app) {
     });
 
     /*2*/
-    app.get('/api/beats', function () {
+    app.get('/api/beats', function (req, res) {
         db.Beats.findAll({})
+        .then(function (dbBeats) {
+            res.json(dbBeats);
+        });
     })
 
     app.post('/api/beats', function (req, res) {
         db.Beats.create({
-            array: req.body.array,
-            beatUsers: req.body.beatUsers
+            array: req.body.beat,
+            userId: req.body.userId
+        }).then(function (dbBeat) {
+            res.json({ beat: dbBeat, status: 301 });
         })
+            .catch(function (err) {
+                res.json(err);
+            });
     });
 
-    app.put('/api/beats', function (req, res) {
-        db.Beats.findOne({
-            where: {}
-        })
-    })
-    
 };
 
 

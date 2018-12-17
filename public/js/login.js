@@ -94,7 +94,7 @@ $(document).ready(function () {
                         alert('user not found! :o');
                         return;
                     } else {
-                        iflogged = data.username;
+                        iflogged = data.userId;
                         $('.login-screen').remove();
                         return iflogged
                     }
@@ -114,10 +114,14 @@ $(document).ready(function () {
             alert('Please enter a password');
         } else {
             $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
+            .then(function (data) {
+                iflogged = data.userId;
+                $('.login-screen').remove();
+                return iflogged
+            })
             .catch(function () {
                 alert('That username has been taken')
             })
-            $('.login-screen').remove()
         }
     });
 
@@ -135,10 +139,14 @@ $(document).ready(function () {
                     alert('Please enter a password');
                 } else {
                     $.ajax({ url: '/api/users', method: 'POST', data: loginFunctions.createAccount() })
+                    .then(function () {
+                        iflogged = data.userId;
+                        $('.login-screen').remove();
+                        return iflogged
+                    })
                     .catch(function () {
                         alert('That username has been taken')
                     })
-                $('.login-screen').remove()
                 }
             }
         }
@@ -166,7 +174,7 @@ $(document).ready(function () {
                                 alert('user not found! :o');
                                 return;
                             } else {
-                                iflogged = data.username;
+                                iflogged = data.userId;
                                 $('.login-screen').remove();
                                 return iflogged
                             }

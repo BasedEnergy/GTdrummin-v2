@@ -3,7 +3,7 @@ const BeatModel = (sequelize, Sequelize) => {
     const Beats = sequelize.define('Beats', {
         beatId: {type: INTEGER, primaryKey: true, autoIncrement: true},
         array: {type: STRING, primaryKey: true},
-        beatUsers: {type: STRING, allowNull: false}
+        userId: {type: INTEGER, primaryKey: true, allowNull: false}
     })
     return Beats
 }

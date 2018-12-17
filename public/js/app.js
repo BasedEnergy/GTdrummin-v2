@@ -1,3 +1,24 @@
+beatFunctions = {
+
+    saveBeat: function () {
+        let newBeat = {
+            beat: matrix1.matrix,
+            userId: iflogged
+        }
+        $.ajax({ url: '/api/beats', method: 'POST', data: newBeat })
+        console.log(newBeat)
+    },
+
+    loadBeat: function () {
+        $.ajax({ url: '/api/beats', method: 'GET' })
+    },
+
+    shareBeat: function () {
+
+    },
+
+}
+
 $(document).ready( function() {
     /**
      * @function toMaster - sends the new player with drum samples to the Master channel to be used in the drum sequencer 
@@ -35,7 +56,6 @@ $(document).ready( function() {
         matrix1.col = 16;
         matrix1.row = 8;
         matrix1.init();
-        matrix1.resize($("#Content").width(), 400);
         matrix1.draw();
     }
     /**
@@ -50,9 +70,6 @@ $(document).ready( function() {
             Tone.Transport.bpm.value = val;
         }
     });
-    /**
-     * @function Button - creates a play/pause  toggle button that also saves the beat when toggled
-     */
     Interface.Button({
         text : "PLAY",
         activeText : "PAUSE",
@@ -60,13 +77,6 @@ $(document).ready( function() {
         key : 32, //spacebar
         start : function(){
             loop.start();
-            let beat=matrix1.matrix;
-            let username = iflogged;
-            let newBeat = {
-                array: JSON.stringify(matrix1.matrix),
-                beatOwner: username
-            }
-            $.ajax({url: '/api/beats', method: 'POST', data: newBeat})
             if (Tone.context.state !== 'running') {
                 Tone.context.resume();
             }
@@ -75,5 +85,12 @@ $(document).ready( function() {
             loop.stop();
         },
     });
+
+    /**
+     * @event - sets the height  and background of .beat-board
+     * 
+     */
+    document.getElementById('test').style.background = 'linear-gradient(to bottom, rgb(55,55,55), rgb(50,50,130))';
+    $('.beat-board').height('calc(60% - 16px)');
 
 });
