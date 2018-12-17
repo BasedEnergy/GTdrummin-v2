@@ -1,5 +1,5 @@
 const BeatModel = (sequelize, Sequelize) => {
-    const { INTEGER, STRING, FLOAT, BOOLEAN, DATE, TEXT } = Sequelize
+    const { INTEGER, STRING, TEXT, FLOAT, BOOLEAN, DATE } = Sequelize
     const Beats = sequelize.define('Beats', {
         beatId: { type: INTEGER, primaryKey: true, autoIncrement: true },
         array: { type: TEXT },
