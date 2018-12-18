@@ -104,6 +104,8 @@ loginFunctions = {
  */
 $(document).ready(function () {
 
+    alert('Dont use an actual password! This login feature has no security');
+
     /**
      * @event - calls login function after basic logic
      */

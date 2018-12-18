@@ -1,7 +1,7 @@
 setBeat = function () {
     $('#test').remove();
     $('body').append(
-        $('<div>').attr('id', 'test').append(
+        $('<div>').attr('id', 'test').addClass('beat-board').append(
             $('<div>').attr('id', 'Content').append(
                 $('<canvas>').addClass('matrix').attr('nx', 'matrix').append(
                     $('<div>').attr('id', 'bar')
@@ -9,6 +9,8 @@ setBeat = function () {
             )
         )
     )
+    document.getElementById('test').style.background = 'linear-gradient(to bottom, rgb(55,55,55), rgb(50,50,130))';
+    $('.beat-board').height('calc(60% - 16px)');
 
     /**
      * @function toMaster - sends the new player with drum samples to the Master channel to be used in the drum sequencer 
@@ -78,9 +80,6 @@ setBeat = function () {
             loop.stop();
         },
     });
-
-    document.getElementById('test').style.background = 'linear-gradient(to bottom, rgb(55,55,55), rgb(50,50,130))';
-    $('.beat-board').height('calc(60% - 16px)');
 
 }
 

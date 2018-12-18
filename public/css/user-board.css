@@ -187,3 +187,22 @@
     0% {right: 300px}
     100% {right: 0px}
 }
+
+.save-beat-page {
+    z-index: 3;
+    position: absolute;
+    background-color: rgb(255,255,255,0.4);
+    height: calc(40% - 16px);
+    width: 50%;
+}
+
+#save-beat {
+    height: 28px;
+    width: 128px;
+    border-radius: 3px;
+    background-color: green
+}
+
+#save-beat-input {
+    width: 80%;
+}

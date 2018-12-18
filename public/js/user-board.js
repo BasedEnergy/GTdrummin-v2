@@ -22,7 +22,7 @@ userBoardFunctions = {
             $('<div>').addClass('ui beats-list').append(
                 $('<h1>').addClass('ui bl-title').text('Beats'),
                 $('<div>').addClass('list').attr('id', 'beats-list'),
-                $('<div>').attr('id', 'save-beat').addClass('ui list-button').text('Save Beat')
+                $('<div>').attr('id', 'open-save-beat').addClass('ui list-button').text('Save Beat')
             ),
         )
     },
@@ -40,12 +40,12 @@ userBoardFunctions = {
                                 $('<div>').addClass('share-beat').append(
                                     $('<i>').addClass('fas fa-share')
                                 ),
-                                $('<h1>').text(),
+                                $('<h1>').text(e.beatName),
                                 $('<div>').addClass('delete-beat').append(
                                     $('<i>').addClass('fas fa-times')
-                                ),
+                                )
                             )
-                        )
+                        );
                     })
                 }
             })
@@ -68,14 +68,28 @@ userBoardFunctions = {
     },
 
     openSaveBeat: function () {
-
+        $('body').append(
+            $('<div>').addClass('save-beat-page').append(
+                $('<div>').addClass('save-beat').append(
+                    $('<h1>').text('Name your beat! :D'),
+                    $('<input>').attr('id', 'save-beat-input'),
+                    $('<div>').attr('id', 'save-beat').append(
+                        $('<h1>').text('Save Beat!')
+                    )
+                )
+            )
+        )
     },
 
     saveBeat: function () {
+        let beatName = $('#save-beat-input').val();
         let newBeat = {
             beat: JSON.stringify(matrix1.matrix),
-            user: iflogged
+            user: iflogged,
+            BPM: matrix1.bpm,
+            beatName: beatName
         };
+        console.log(newBeat)
         $.ajax({ url: '/api/beats', method: 'POST', data: newBeat })
             .then(function (data) {
                 if (data.status === 301) {
@@ -84,16 +98,17 @@ userBoardFunctions = {
                             $('<div>').addClass('share-beat').append(
                                 $('<i>').addClass('fas fa-share')
                             ),
-                            $('<h1>').text(),
+                            $('<h1>').text(data.beat.beatName),
                             $('<div>').addClass('delete-beat').append(
                                 $('<i>').addClass('fas fa-times')
                             )
                         )
-                    )
+                    );
+                    $('.save-beat-page').remove();
                 }
                 if (data.errors[0].message === 'Beats.user cannot be null') {
                     alert('You need to be signed in to save beats!');
-                } 
+                }
             })
     },
 
@@ -118,7 +133,7 @@ $(document).ready(function () {
         ),
         $('<div>').addClass('ui bl-button-return').css('animation', 'none').attr('id', 'open-beats-list-button').append(
             $('<i>').addClass('fab fa-itunes-note')
-        ),
+        )
     );
 
     userBoardFunctions.renderEffects();

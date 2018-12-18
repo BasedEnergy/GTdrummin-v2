@@ -53,7 +53,9 @@ module.exports = function (app) {
     app.post('/api/beats', function (req, res) {
         db.Beats.create({
             array: req.body.beat,
-            user: req.body.user
+            user: req.body.user,
+            BPM: req.body.BPM,
+            beatName: req.body.beatName
         }).then(function (dbBeat) {
             res.json({ beat: dbBeat, status: 301 });
         })
